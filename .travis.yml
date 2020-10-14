@@ -21,6 +21,7 @@ matrix:
     - os: linux
       rust: stable
       arch: arm64
+      dist: focal
       env: TARGET=aarch64-unknown-linux-gnu
 
     # Minimum Rust supported channel.
