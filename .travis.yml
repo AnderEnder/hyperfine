@@ -45,7 +45,7 @@ addons:
   apt:
     packages:
       # needed for i686-unknown-linux-gnu target
-      - gcc-multilib
+      # - gcc-multilib
       # needed to build deb packages
       - fakeroot
 
@@ -53,13 +53,14 @@ env:
   global:
     # Default target on travis-ci.
     # Used as conditional check in the install stage
-    - HOST=x86_64-unknown-linux-gnu
+    # - HOST=x86_64-unknown-linux-gnu
     # Used on the deployment script
     - PROJECT_NAME=hyperfine
 
 install:
+  - if [[ $TRAVIS_OS_NAME = linux && $TARGET == "i686-unknown-linux-"* ]]; then sudo apt-get -y install gcc-multilib; fi
   # prevent target re-add error from rustup
-  - if [[ $TRAVIS_OS_NAME = linux && $HOST != $TARGET ]]; then rustup target add $TARGET; fi
+  - if [[ $TRAVIS_OS_NAME = linux && $TARGET == "i686-unknown-linux-"* ]]; then rustup target add $TARGET; fi
 
 script:
   # Incorporate TARGET env var to the build and test process
