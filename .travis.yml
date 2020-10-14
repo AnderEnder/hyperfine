@@ -58,9 +58,9 @@ env:
     - PROJECT_NAME=hyperfine
 
 install:
-  - if [[ $TRAVIS_OS_NAME = linux && $TARGET == "i686-unknown-linux-"* ]]; then sudo apt-get -y install gcc-multilib; fi
+  - if [[ $TARGET == "i686-unknown-linux-"* ]]; then sudo apt-get -y install gcc-multilib; fi
   # prevent target re-add error from rustup
-  - if [[ $TRAVIS_OS_NAME = linux && $TARGET == "i686-unknown-linux-"* ]]; then rustup target add $TARGET; fi
+  - if [[ $TARGET == "i686-unknown-linux-"* || $TARGET == *"unknown-linux-musl" ]]; then rustup target add $TARGET; fi
 
 script:
   # Incorporate TARGET env var to the build and test process
